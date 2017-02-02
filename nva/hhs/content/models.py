@@ -68,3 +68,27 @@ class ProductFTI(ContentFTI):
 
 class ProductAddForm(AddForm):
     grok.name('product')
+
+
+@implementer(interfaces.IProduct)
+class Hazard(PloneModel, Base):
+    grok.title("Hazard")
+
+    portal_type = "hazard"
+    __tablename__ = 'hazards'
+
+    id = Column('id', Integer, primary_key=True)
+    type = Column('name', String(50))
+    timespan = Column('category', String(50))
+    product_id = Column('product_id', Integer, ForeignKey('products.id'))
+ 
+
+class HazardFTI(ContentFTI):
+    grok.name('hazard')
+    __model__ = Hazard
+    schema = interfaces.IHazard
+    klass = "nva.hhs.content.Hazard"
+
+
+class HazardAddForm(AddForm):
+    grok.name('hazard')

@@ -28,5 +28,34 @@ def producers(context):
     return SimpleVocabulary(items)
 
 
+@grok.provider(IContextSourceBinder)
+def categories(context):
+    items = []
+    for category in [u'mechanisch', u'biologisch', u'chemisch',]:
+        items.append(SimpleTerm(
+            category, token=category, title=category))
+    return SimpleVocabulary(items)
+
+@grok.provider(IContextSourceBinder)
+def hazards(context):
+    items = []
+    for hazard in [u'acid', 'heat', 'radioativ', 'bio']:
+        items.append(SimpleTerm(
+            hazard, token=hazard, title=hazard))
+    return SimpleVocabulary(items)
+
+
+@grok.provider(IContextSourceBinder)
+def timespans(context):
+    items = []
+    for timespan in [u'0-1 Hours', '1-2 Hours', '3-4 Hours', '5-6 Hours']:
+        items.append(SimpleTerm(
+            timespan, token=timespan, title=timespan))
+    return SimpleVocabulary(items)
+
+
 VOCABULARIES['products'] = products
 VOCABULARIES['producers'] = producers
+VOCABULARIES['categories'] = categories 
+VOCABULARIES['hazards'] = hazards 
+VOCABULARIES['timespans'] = timespans 

@@ -49,6 +49,24 @@ class IProducer(interface.Interface):
     )
 
 
+class IHazard(interface.Interface):
+
+    id = schema.TextLine(
+        title=u"ID",
+        readonly=True
+    )
+
+    type = schema.Choice(
+        title=u"Type of Hazard",
+        source=sources('hazards'),
+    )
+
+    timespan = schema.Choice(
+        title=u"Timespan",
+        source=sources('timespans'),
+    )
+
+
 class IProduct(interface.Interface):
 
     id = schema.Int(
@@ -60,12 +78,20 @@ class IProduct(interface.Interface):
         title=u"Name"
     )
 
-    category = schema.TextLine(
-        title=u"Category"
-    )
-
     producer = schema.Choice(
         title=u"i",
         source=sources('producers'),
         required=False,
     )
+
+    category = schema.Set(
+        title=u"Category",
+        value_type=schema.Choice(title=u"", source=sources('categories')),
+    )
+
+    hazards = schema.List(
+        title=u"Hazards",
+        value_type=schema.Object(title=u"", schema=IHazard),
+    )
+
+
