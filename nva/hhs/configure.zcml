@@ -1,0 +1,24 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+	   xmlns:db="http://namespaces.zope.org/db"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:grok="http://namespaces.zope.org/grok">
+
+  <include package="five.grok" />
+  <include package="z3c.saconfig" file="meta.zcml" />
+  <db:engine name="bgetem" url="sqlite:////tmp/bgetemp.sql" />
+  <db:session name="sqlsession" engine="bgetem" />
+
+  <grok:grok package="." />
+
+  <browser:defaultView
+      for=".content.container.Producers"
+      name="index"
+      />
+
+  <browser:defaultView
+      for=".content.container.Products"
+      name="index"
+      />
+
+</configure>
+
