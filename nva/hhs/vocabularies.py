@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import transaction
 import grokcore.component as grok
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.schema.interfaces import IContextSourceBinder
 from z3c.saconfig import named_scoped_session
-from .content.models import Product, Producer
+from zope.processlifetime import IDatabaseOpenedWithRoot
+from .content.models import Product, Producer, Category
+from sqlalchemy.exc import IntegrityError
 from . import VOCABULARIES
 
 
@@ -31,10 +34,12 @@ def producers(context):
 @grok.provider(IContextSourceBinder)
 def categories(context):
     items = []
-    for category in [u'mechanisch', u'biologisch', u'chemisch',]:
+    session = named_scoped_session('sqlsession')
+    for cat in session.query(Category).all():
         items.append(SimpleTerm(
-            category, token=category, title=category))
+            cat, token=cat.id, title=cat.name))
     return SimpleVocabulary(items)
+
 
 @grok.provider(IContextSourceBinder)
 def hazards(context):
@@ -59,3 +64,23 @@ VOCABULARIES['producers'] = producers
 VOCABULARIES['categories'] = categories 
 VOCABULARIES['hazards'] = hazards 
 VOCABULARIES['timespans'] = timespans 
+
+
+CATEGORIES = [
+    (u'mechanisch', u'Mechanisch'),
+    (u'biologisch', u'Biologisch'),
+    (u'chemisch', u'Chemisch'),
+]
+
+@grok.subscribe(IDatabaseOpenedWithRoot)
+def create_sql_content(event):
+    try:
+        print "Injecting SQL content"
+        with transaction.manager:
+            session = named_scoped_session('sqlsession')
+            for id, name in CATEGORIES:
+                cat = Category(id=id, name=name)
+                session.add(cat)
+    except IntegrityError:
+        # data already exists, skipping.
+        print "SQL content was already created"

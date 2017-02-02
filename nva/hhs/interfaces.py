@@ -66,6 +66,17 @@ class IHazard(interface.Interface):
     )
 
 
+class ICategory(interface.Interface):
+
+    id = schema.TextLine(
+        title=u"ID",
+    )
+
+    name = schema.TextLine(
+        title=u"Name",
+    )
+
+
 class IProduct(interface.Interface):
 
     id = schema.Int(
@@ -83,7 +94,7 @@ class IProduct(interface.Interface):
         required=False,
     )
 
-    category = schema.Set(
+    categories = schema.Set(
         title=u"Category",
         value_type=schema.Choice(title=u"", source=sources('categories')),
     )
