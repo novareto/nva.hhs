@@ -53,7 +53,6 @@ class IHazard(interface.Interface):
 
     id = schema.TextLine(
         title=u"ID",
-        readonly=True
     )
 
     type = schema.Choice(

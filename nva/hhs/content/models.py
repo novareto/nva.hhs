@@ -54,6 +54,7 @@ class Product(PloneModel, Base):
     name = Column('name', String(50))
     category = Column('category', String(50))
     producer_id = Column('producer_id', Integer, ForeignKey('producers.id'))
+    hazards = relation("Hazard", backref="product")
     
     def getId(self):
         return self.email
@@ -70,7 +71,7 @@ class ProductAddForm(AddForm):
     grok.name('product')
 
 
-@implementer(interfaces.IProduct)
+@implementer(interfaces.IHazard)
 class Hazard(PloneModel, Base):
     grok.title("Hazard")
 
@@ -81,7 +82,13 @@ class Hazard(PloneModel, Base):
     type = Column('name', String(50))
     timespan = Column('category', String(50))
     product_id = Column('product_id', Integer, ForeignKey('products.id'))
- 
+
+    def reindexObject(self, *args, **kwargs):
+        pass
+
+from z3c.form.object import registerFactoryAdapter
+registerFactoryAdapter(interfaces.IHazard, Hazard)
+
 
 class HazardFTI(ContentFTI):
     grok.name('hazard')
