@@ -6,6 +6,9 @@ from z3c.saconfig.interfaces import IEngineCreatedEvent
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation
 from zope.interface import implementer
+from zope.i18nmessageid import MessageFactory
+
+MessageFactory = MessageFactory('nva.hhs')
 
 
 Base = declarative_base()
