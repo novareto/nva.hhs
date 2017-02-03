@@ -5,6 +5,7 @@
 
   <include package="five.grok" />
   <include package="z3c.saconfig" file="meta.zcml" />
+  <include package="collective.z3cform.datagridfield" />
   <db:engine name="bgetem" url="sqlite:////tmp/bgetemp.sql" />
   <db:session name="sqlsession" engine="bgetem" />
 
@@ -21,4 +22,3 @@
       />
 
 </configure>
-

@@ -4,6 +4,7 @@
 
 from bgetem.sqlcontainer.dexterity import ContentFTI, AddForm
 from bgetem.sqlcontainer.models import PloneModel
+from collective.z3cform.datagridfield import DataGridFieldFactory
 from five import grok
 from nva.hhs import interfaces
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -11,6 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, relationship
 from z3c.form.object import registerFactoryAdapter
 from zope.interface import implementer
+
 from .. import Base
 
 
@@ -89,6 +91,21 @@ class ProductFTI(ContentFTI):
 class ProductAddForm(AddForm):
     grok.name('product')
 
+    def updateWidgets(self):
+        self.fields['hazards'].widgetFactory = DataGridFieldFactory
+        super(AddForm, self).updateWidgets()
+        # Enable/Disable the insert button on the right
+        self.widgets['hazards'].allow_insert = True
+        # Enable/Disable the delete button on the right
+        self.widgets['hazards'].allow_delete = True
+        # Enable/Disable the auto-append feature
+        self.widgets['hazards'].auto_append = False  
+        # Enable/Disable the re-order rows feature
+        self.widgets['hazards'].allow_reorder = True
+
+
+        
+        
 
 @implementer(interfaces.IHazard)
 class Hazard(PloneModel, Base):

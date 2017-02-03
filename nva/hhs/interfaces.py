@@ -5,6 +5,7 @@
 import grokcore.component as grok
 from zope import interface, schema
 from zope.schema.interfaces import IContextSourceBinder
+from collective.z3cform.datagridfield import DictRow
 from . import VOCABULARIES
 
 
@@ -101,7 +102,7 @@ class IProduct(interface.Interface):
 
     hazards = schema.List(
         title=u"Hazards",
-        value_type=schema.Object(title=u"", schema=IHazard),
+        value_type=DictRow(title=u"", schema=IHazard),
     )
 
 
