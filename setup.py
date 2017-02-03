@@ -25,6 +25,8 @@ setup(name='nva.hhs',
           'setuptools',
           'uvc.api[plone]',
           'z3c.saconfig',
+          'plone.formwidget.autocomplete',
+          'python-gettext',
           'collective.z3cform.datagridfield',
       ],
       entry_points={

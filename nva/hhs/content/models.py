@@ -12,6 +12,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, relationship
 from z3c.form.object import registerFactoryAdapter
 from zope.interface import implementer
+from z3c.form.browser.checkbox import CheckBoxFieldWidget
+from plone.formwidget.autocomplete import AutocompleteFieldWidget
+
 
 from .. import Base
 
@@ -94,7 +97,10 @@ class ProductAddForm(AddForm):
     grok.name('product')
 
     def updateWidgets(self):
+        self.fields['categories'].widgetFactory = CheckBoxFieldWidget
+        #self.fields['producer'].widgetFactory = AutocompleteFieldWidget 
         self.fields['hazards'].widgetFactory = DataGridFieldFactory
+        self.fields["variables"].widgetFactory
         super(AddForm, self).updateWidgets()
         # Enable/Disable the insert button on the right
         self.widgets['hazards'].allow_insert = True
@@ -103,10 +109,8 @@ class ProductAddForm(AddForm):
         # Enable/Disable the auto-append feature
         self.widgets['hazards'].auto_append = False  
         # Enable/Disable the re-order rows feature
-        self.widgets['hazards'].allow_reorder = True
+        self.widgets['hazards'].allow_reorder = False 
 
-
-        
         
 
 @implementer(interfaces.IHazard)

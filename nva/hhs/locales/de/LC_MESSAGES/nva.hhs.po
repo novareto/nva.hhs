@@ -27,58 +27,58 @@ msgstr ""
 
 #: nva.hhs:/interfaces.py:102
 msgid "Producer"
-msgstr ""
+msgstr "Hersteller"
 
 #: nva.hhs:/interfaces.py:108
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: nva.hhs:/interfaces.py:113
 msgid "Hazards"
-msgstr ""
+msgstr "Gefahren/Gefährdungen"
 
 #: nva.hhs:/interfaces.py:23 nva.hhs:/interfaces.py:61
 #: nva.hhs:/interfaces.py:78 nva.hhs:/interfaces.py:89
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: nva.hhs:/interfaces.py:28 nva.hhs:/interfaces.py:82
 #: nva.hhs:/interfaces.py:94
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: nva.hhs:/interfaces.py:32
 msgid "Street"
-msgstr ""
+msgstr "Strasse"
 
 #: nva.hhs:/interfaces.py:36
 msgid "ZIP"
-msgstr ""
+msgstr "Postleitzahl"
 
 #: nva.hhs:/interfaces.py:40
 msgid "City"
-msgstr ""
+msgstr "Ort"
 
 #: nva.hhs:/interfaces.py:44
 msgid "Hompage"
-msgstr ""
+msgstr "Homepage"
 
 #: nva.hhs:/interfaces.py:48
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #: nva.hhs:/interfaces.py:52
 msgid "i"
-msgstr ""
+msgstr "Produkte"
 
 #: nva.hhs:/interfaces.py:65
 msgid "Type of Hazard"
-msgstr ""
+msgstr "Art der Gefahr"
 
 #: nva.hhs:/interfaces.py:70
 msgid "Timespan"
-msgstr ""
+msgstr "Zeitspanne"
 
 #: nva.hhs:/interfaces.py:98
 msgid "ProductNumber"
-msgstr ""
+msgstr "Artikelnummer"

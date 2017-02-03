@@ -70,6 +70,8 @@ CATEGORIES = [
     (u'mechanisch', u'Mechanisch'),
     (u'biologisch', u'Biologisch'),
     (u'chemisch', u'Chemisch'),
+    (u'thermisch', u'Thermisch'),
+    (u'strahlen', u'Strahlen'),
 ]
 
 @grok.subscribe(IDatabaseOpenedWithRoot)
