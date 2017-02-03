@@ -1,0 +1,40 @@
+<h1> Hand und Hautschutz </h1>
+
+<p class="lead"> In dieser Datenbank können Sie Hersteller, Produkte und deren Eigenschaften erfassen </p>
+
+
+<div class="row col-md-12">
+
+  <div class="col-md-6">
+    <h3> Hersteller </h3>
+    <ul>
+      <li>
+         <a href="" tal:attributes="href view.url(context, '++producers++')"> Alle Hersteller anzeigen </a>
+      </li>
+      <li>
+         <a href="" tal:attributes="href view.url(context, '++producers++/++add++producer')"> Neuen Hersteller anlegen </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h3> Produkte </h3>
+    <ul>
+      <li>
+         <a href="" tal:attributes="href view.url(context, '++products++')"> Alle Produkte anzeigen </a>
+      </li>
+      <li>
+         <a href="" tal:attributes="href view.url(context, '++products++/++add++product')"> Neues Produkt anlegen </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

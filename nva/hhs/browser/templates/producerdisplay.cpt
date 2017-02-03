@@ -1,0 +1,29 @@
+<h2 tal:content="context.name"> </h2>
+
+<p tal:content="context.street"></p>
+<p tal:content="string: ${context.zip} ${context.city}"></p>
+<p tal:content="context.www"></p>
+<p tal:content="context.email"></p>
+
+<b> Produkte </b>
+
+<table class="table listing">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Artikelnummer </th>
+      <th> Hersteller </th>
+      <th> Kategorie </th>
+      <th> Gefahren </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="product context.products">
+      <td> <a href="" tal:content="product.name"> </a> </td>
+      <td tal:content="product.product_id"></td>
+      <td tal:content="product.producer.name"></td>
+      <td><li> <ul tal:repeat="category product.categories" tal:content="category.name"> </ul> </li></td>
+      <td><li> <ul tal:repeat="hazard product.hazards" tal:content="hazard.type"> </ul> </li></td>
+    </tr>
+  </tbody>
+</table>

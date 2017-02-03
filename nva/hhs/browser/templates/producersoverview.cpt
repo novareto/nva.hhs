@@ -1,0 +1,24 @@
+<h1> Hersteller </h1>
+
+<table class="table listing">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Strasse </th>
+      <th> Postleitzahl </th>
+      <th> Ort </th>
+      <th> WWW </th>
+      <th> Email </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="producer context">
+      <td> <a href="" tal:attributes="href view.url(producer, 'edit')" tal:content="producer.name"> </a> </td>
+      <td tal:content="producer.street"> </td>
+      <td tal:content="producer.zip"></td>
+      <td tal:content="producer.zip"></td>
+      <td tal:content="producer.www"></td>
+      <td tal:content="producer.email"></td>
+    </tr>
+  </tbody>
+</table>

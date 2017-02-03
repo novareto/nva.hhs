@@ -1,0 +1,5 @@
+<h1 tal:content="context.name"/>
+<p tal:content="context.product_id"> </p>
+<p tal:content="product.producer.name"> </p>
+<li> <ul tal:repeat="category product.categories" tal:content="category.name"> </ul> </li>
+<li> <ul tal:repeat="hazard product.hazards" tal:content="hazard.type"> </ul> </li>
