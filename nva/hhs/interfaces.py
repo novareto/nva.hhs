@@ -6,6 +6,7 @@ import grokcore.component as grok
 from zope import interface, schema
 from zope.schema.interfaces import IContextSourceBinder
 from . import VOCABULARIES
+from . import MessageFactory as _
 
 
 def sources(name):
@@ -32,6 +33,10 @@ class IProducer(interface.Interface):
 
     zip = schema.TextLine(
         title=u"ZIP"
+    )
+
+    city = schema.TextLine(
+        title=u"City"
     )
 
     www = schema.TextLine(
@@ -66,6 +71,17 @@ class IHazard(interface.Interface):
     )
 
 
+class ICategory(interface.Interface):
+
+    id = schema.TextLine(
+        title=u"ID",
+    )
+
+    name = schema.TextLine(
+        title=u"Name",
+    )
+
+
 class IProduct(interface.Interface):
 
     id = schema.Int(
@@ -77,13 +93,17 @@ class IProduct(interface.Interface):
         title=u"Name"
     )
 
+    product_id = schema.TextLine(
+        title=u"ProductNumber"
+    )
+
     producer = schema.Choice(
         title=u"i",
         source=sources('producers'),
         required=False,
     )
 
-    category = schema.Set(
+    categories = schema.Set(
         title=u"Category",
         value_type=schema.Choice(title=u"", source=sources('categories')),
     )

@@ -2,15 +2,33 @@
 # Copyright (c) 2007-2013 NovaReto GmbH
 # cklinger@novareto.de
 
-from bgetem.sqlcontainer.models import PloneModel
 from bgetem.sqlcontainer.dexterity import ContentFTI, AddForm
+from bgetem.sqlcontainer.models import PloneModel
 from five import grok
 from nva.hhs import interfaces
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relation, relationship
+from z3c.form.object import registerFactoryAdapter
 from zope.interface import implementer
 from .. import Base
+
+
+@implementer(interfaces.ICategory)
+class Category(Base):
+    __tablename__ = "categories"
+
+    id = Column('id', String(50), primary_key=True)
+    name = Column('name', String(50))
+
+    products = relationship(
+        "Product", secondary='products_categories', collection_class=set)
+
+
+class ProductCategory(Base):
+    __tablename__ = 'products_categories'
+    product_id = Column(Integer, ForeignKey('products.id'), primary_key=True)
+    category_id = Column(Integer, ForeignKey('categories.id'), primary_key=True)
 
 
 @implementer(interfaces.IProducer)
@@ -23,6 +41,7 @@ class Producer(PloneModel, Base):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String(50))
     street = Column('street', String(50))
+    city = Column('city', String(50))
     zip = Column('zip', String(50))
     www = Column('hompage', String(50))
     email = Column('email', String(50))
@@ -52,10 +71,12 @@ class Product(PloneModel, Base):
 
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String(50))
-    category = Column('category', String(50))
+    product_id = Column('product_id', String(50))
     producer_id = Column('producer_id', Integer, ForeignKey('producers.id'))
-    hazards = relation("Hazard", backref="product")
     
+    categories = relationship(
+        "Category", secondary='products_categories', collection_class=set)
+
     def getId(self):
         return self.email
 
@@ -78,16 +99,14 @@ class Hazard(PloneModel, Base):
     portal_type = "hazard"
     __tablename__ = 'hazards'
 
-    id = Column('id', Integer, primary_key=True)
+    id = Column('id', String(50), primary_key=True)
     type = Column('name', String(50))
     timespan = Column('category', String(50))
     product_id = Column('product_id', Integer, ForeignKey('products.id'))
+    product = relation("Product", backref="hazards")
 
     def reindexObject(self, *args, **kwargs):
         pass
-
-from z3c.form.object import registerFactoryAdapter
-registerFactoryAdapter(interfaces.IHazard, Hazard)
 
 
 class HazardFTI(ContentFTI):
@@ -99,3 +118,6 @@ class HazardFTI(ContentFTI):
 
 class HazardAddForm(AddForm):
     grok.name('hazard')
+
+
+registerFactoryAdapter(interfaces.IHazard, Hazard)

@@ -20,5 +20,15 @@
       name="index"
       />
 
+  <browser:defaultView
+      for=".content.models.Producer"
+      name="index"
+      />
+
+  <browser:defaultView
+      for=".content.models.Product"
+      name="index"
+      />
+
 </configure>
 
