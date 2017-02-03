@@ -19,36 +19,36 @@ def sources(name):
 class IProducer(interface.Interface):
 
     id = schema.Int(
-        title=u"ID",
+        title=_(u"ID"),
         readonly=True
     )
 
     name = schema.TextLine(
-        title=u"Name"
+        title=_(u"Name")
     )
 
     street = schema.TextLine(
-        title=u"Street"
+        title=_(u"Street")
     )
 
     zip = schema.TextLine(
-        title=u"ZIP"
+        title=_(u"ZIP")
     )
 
     city = schema.TextLine(
-        title=u"City"
+        title=_(u"City")
     )
 
     www = schema.TextLine(
-        title=u"Hompage"
+        title=_(u"Hompage")
     )
 
     email = schema.TextLine(
-        title=u"E-Mail"
+        title=_(u"E-Mail")
     )
 
     products = schema.List(
-        title=u"i",
+        title=_(u"i"),
         value_type=schema.Choice(source=sources('products')),
         required=False,
     )
@@ -57,16 +57,16 @@ class IProducer(interface.Interface):
 class IHazard(interface.Interface):
 
     id = schema.TextLine(
-        title=u"ID",
+        title=_(u"ID"),
     )
 
     type = schema.Choice(
-        title=u"Type of Hazard",
+        title=_(u"Type of Hazard"),
         source=sources('hazards'),
     )
 
     timespan = schema.Choice(
-        title=u"Timespan",
+        title=_(u"Timespan"),
         source=sources('timespans'),
     )
 
@@ -74,43 +74,43 @@ class IHazard(interface.Interface):
 class ICategory(interface.Interface):
 
     id = schema.TextLine(
-        title=u"ID",
+        title=_(u"ID"),
     )
 
     name = schema.TextLine(
-        title=u"Name",
+        title=_(u"Name"),
     )
 
 
 class IProduct(interface.Interface):
 
     id = schema.Int(
-        title=u"ID",
+        title=_(u"ID"),
         readonly=True
     )
 
     name = schema.TextLine(
-        title=u"Name"
+        title=_(u"Name")
     )
 
     product_id = schema.TextLine(
-        title=u"ProductNumber"
+        title=_(u"ProductNumber")
     )
 
     producer = schema.Choice(
-        title=u"i",
+        title=_(u"Producer"),
         source=sources('producers'),
         required=False,
     )
 
     categories = schema.Set(
-        title=u"Category",
-        value_type=schema.Choice(title=u"", source=sources('categories')),
+        title=_(u"Category"),
+        value_type=schema.Choice(title=_(u""), source=sources('categories')),
     )
 
     hazards = schema.List(
-        title=u"Hazards",
-        value_type=schema.Object(title=u"", schema=IHazard),
+        title=_(u"Hazards"),
+        value_type=schema.Object(title=_(u""), schema=IHazard),
     )
 
 
