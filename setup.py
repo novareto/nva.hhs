@@ -24,6 +24,7 @@ setup(name='nva.hhs',
       install_requires=[
           'setuptools',
           'uvc.api[plone]',
+          'z3c.saconfig',
           'collective.z3cform.datagridfield',
       ],
       entry_points={
