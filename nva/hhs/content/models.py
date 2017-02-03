@@ -100,7 +100,7 @@ class ProductAddForm(AddForm):
         self.fields['categories'].widgetFactory = CheckBoxFieldWidget
         #self.fields['producer'].widgetFactory = AutocompleteFieldWidget 
         self.fields['hazards'].widgetFactory = DataGridFieldFactory
-        self.fields["variables"].widgetFactory
+        #self.fields["variables"].widgetFactory
         super(AddForm, self).updateWidgets()
         # Enable/Disable the insert button on the right
         self.widgets['hazards'].allow_insert = True
