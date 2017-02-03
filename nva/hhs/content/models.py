@@ -31,7 +31,7 @@ class ProductCategory(Base):
     __tablename__ = 'products_categories'
     product_id = Column(Integer, ForeignKey('products.id'), primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'), primary_key=True)
-    
+
 
 @implementer(interfaces.IProducer)
 class Producer(PloneModel, Base):
@@ -43,6 +43,7 @@ class Producer(PloneModel, Base):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String(50))
     street = Column('street', String(50))
+    city = Column('city', String(50))
     zip = Column('zip', String(50))
     www = Column('hompage', String(50))
     email = Column('email', String(50))
@@ -72,6 +73,7 @@ class Product(PloneModel, Base):
 
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String(50))
+    product_id = Column('product_id', String(50))
     producer_id = Column('producer_id', Integer, ForeignKey('producers.id'))
     
     categories = relationship(

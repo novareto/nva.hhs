@@ -7,6 +7,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation
 from zope.interface import implementer
 from z3c.saconfig import named_scoped_session
+from zope.i18nmessageid import MessageFactory
+
+MessageFactory = MessageFactory('nva.hhs')
 
 
 Base = declarative_base()
