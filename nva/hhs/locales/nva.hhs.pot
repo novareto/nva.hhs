@@ -1,0 +1,86 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Foundation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: Fri Feb  3 11:33:38 2017\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: nva.hhs:/interfaces.py:102
+msgid "Producer"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:108
+msgid "Category"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:113
+msgid "Hazards"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:23
+#: nva.hhs:/interfaces.py:61
+#: nva.hhs:/interfaces.py:78
+#: nva.hhs:/interfaces.py:89
+msgid "ID"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:28
+#: nva.hhs:/interfaces.py:82
+#: nva.hhs:/interfaces.py:94
+msgid "Name"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:32
+msgid "Street"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:36
+msgid "ZIP"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:40
+msgid "City"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:44
+msgid "Hompage"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:48
+msgid "E-Mail"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:52
+msgid "i"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:65
+msgid "Type of Hazard"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:70
+msgid "Timespan"
+msgstr ""
+
+#: nva.hhs:/interfaces.py:98
+msgid "ProductNumber"
+msgstr ""
+
