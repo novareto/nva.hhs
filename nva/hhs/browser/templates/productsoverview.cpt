@@ -1,22 +1,38 @@
-<h1> Hersteller </h1>
-
-<table class="table listing">
-  <thead>
-    <tr>
-      <th> Name </th>
-      <th> Artikelnummer </th>
-      <th> Hersteller </th>
-      <th> Kategorie </th>
-      <th> Gefahren </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr tal:repeat="product context">
-      <td> <a href="" tal:attributes="href view.url(product, 'edit')" tal:content="product.name"> </a> </td>
-      <td tal:content="product.product_id"></td>
-      <td tal:content="product.producer.name"></td>
-      <td><li> <ul tal:repeat="category product.categories" tal:content="category.name"> </ul> </li></td>
-      <td><li> <ul tal:repeat="hazard product.hazards" tal:content="hazard.type"> </ul> </li></td>
-    </tr>
-  </tbody>
-</table>
+<div>
+  <h1>Hersteller</h1>
+  <table class="table listing">
+    <thead>
+      <tr>
+	<th> Name </th>
+	<th> Artikelnummer </th>
+	<th> Hersteller </th>
+	<th> Kategorie </th>
+	<th> Gefahren </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr tal:repeat="product context">
+	<td>
+	  <a href="" tal:attributes="href view.url(product, 'edit')"
+	     tal:content="product.content.name"> </a>
+	</td>
+	<td tal:content="product.content.product_id"></td>
+	<!--
+	    <td tal:content="product.producer.name"></td>
+	-->
+	<td>
+	  <ul>
+	    <li tal:repeat="category product.content.categories"
+		tal:content="category.name"> </li>
+	  </ul>
+	</td>
+	<td>
+	  <ul>
+	    <li tal:repeat="hazard product.content.hazards"
+		tal:content="hazard.type"> </li>
+	  </ul>
+	</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 
-import transaction
 import grokcore.component as grok
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from zope.schema.interfaces import IContextSourceBinder
+import transaction
+
+from sqlalchemy.exc import IntegrityError
+from z3c.formwidget.query.interfaces import IQuerySource
 from z3c.saconfig import named_scoped_session
 from zope.processlifetime import IDatabaseOpenedWithRoot
-from .content.models import Product, Producer, Category
-from sqlalchemy.exc import IntegrityError
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.interface import implementer
+
 from . import VOCABULARIES
+from .content.models import Product, Producer, Category
 
 
 @grok.provider(IContextSourceBinder)
@@ -29,6 +33,33 @@ def producers(context):
         items.append(SimpleTerm(
             producer, token=producer.id, title=producer.name))
     return SimpleVocabulary(items)
+
+
+@implementer(IQuerySource)
+class ProducersQuery(object):
+    
+    def __init__(self, context):
+        self.vocabulary = producers(context)
+
+    def __contains__(self, item):
+        return self.vocabulary.__contains__(item)
+
+    def __iter__(self):
+        return iter(self.vocabulary)
+
+    def getTerm(self, *args, **kwargs):
+        return self.vocabulary.getTerm(*args, **kwargs)
+
+    def getTermByToken(self, *args, **kwargs):
+        return self.vocabulary.getTermByToken(*args, **kwargs)
+
+    def search(self, query_string):
+        return [v for v in self if query_string.lower() in v.value.name.lower()]
+
+
+@grok.provider(IContextSourceBinder)
+def query_producers(context):
+    return ProducersQuery(context)
 
 
 @grok.provider(IContextSourceBinder)
@@ -63,7 +94,8 @@ VOCABULARIES['products'] = products
 VOCABULARIES['producers'] = producers
 VOCABULARIES['categories'] = categories 
 VOCABULARIES['hazards'] = hazards 
-VOCABULARIES['timespans'] = timespans 
+VOCABULARIES['timespans'] = timespans
+VOCABULARIES['producers_query'] = query_producers
 
 
 CATEGORIES = [

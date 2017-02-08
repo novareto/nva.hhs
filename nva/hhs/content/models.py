@@ -2,18 +2,21 @@
 # Copyright (c) 2007-2013 NovaReto GmbH
 # cklinger@novareto.de
 
+from bgetem.sqlcontainer.models import PloneSQLModel
 from bgetem.sqlcontainer.dexterity import ContentFTI, AddForm
-from bgetem.sqlcontainer.models import PloneModel
 from collective.z3cform.datagridfield import DataGridFieldFactory
 from five import grok
 from nva.hhs import interfaces
+from plone.formwidget.autocomplete import AutocompleteFieldWidget
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, relationship
-from z3c.form.object import registerFactoryAdapter
-from zope.interface import implementer
 from z3c.form.browser.checkbox import CheckBoxFieldWidget
-from plone.formwidget.autocomplete import AutocompleteFieldWidget
+from z3c.form.interfaces import IEditForm
+from z3c.form.object import registerFactoryAdapter
+from zope.interface import implementer, implementsOnly, implementedBy
+from zope.publisher.interfaces.browser import IBrowserPage
+from App.class_init import InitializeClass
 
 
 from .. import Base
@@ -37,7 +40,7 @@ class ProductCategory(Base):
 
 
 @implementer(interfaces.IProducer)
-class Producer(PloneModel, Base):
+class Producer(Base):
     grok.title("Producer")
 
     portal_type = "producer"
@@ -56,6 +59,10 @@ class Producer(PloneModel, Base):
         return self.name
 
 
+class ProducerWrapper(PloneSQLModel):
+    pass
+
+    
 class ProducerFTI(ContentFTI):
     grok.name('producer')
     __model__ = Producer
@@ -68,7 +75,7 @@ class ProducerAddForm(AddForm):
 
 
 @implementer(interfaces.IProduct)
-class Product(PloneModel, Base):
+class Product(Base):
     grok.title("Product")
 
     portal_type = "product"
@@ -83,7 +90,11 @@ class Product(PloneModel, Base):
         "Category", secondary='products_categories', collection_class=set)
 
     def getId(self):
-        return self.email
+        return self.name
+
+
+class ProductWrapper(PloneSQLModel):
+    pass
 
 
 class ProductFTI(ContentFTI):
@@ -98,7 +109,7 @@ class ProductAddForm(AddForm):
 
     def updateWidgets(self):
         self.fields['categories'].widgetFactory = CheckBoxFieldWidget
-        #self.fields['producer'].widgetFactory = AutocompleteFieldWidget 
+        self.fields['producer'].widgetFactory = AutocompleteFieldWidget 
         self.fields['hazards'].widgetFactory = DataGridFieldFactory
         #self.fields["variables"].widgetFactory
         super(AddForm, self).updateWidgets()
@@ -111,10 +122,27 @@ class ProductAddForm(AddForm):
         # Enable/Disable the re-order rows feature
         self.widgets['hazards'].allow_reorder = False 
 
-        
+
+from plone.dexterity.browser import add, edit
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from plone.dexterity.interfaces import IDexterityFTI
+from Acquisition import Explicit, ImplicitAcquisitionWrapper
+
+
+class ProductEditForm(edit.DefaultEditForm):
+
+    def getContent(self):
+        return self.context.content
+    
+    def updateWidgets(self):
+        self.fields['categories'].widgetFactory = CheckBoxFieldWidget
+        self.fields['producer'].widgetFactory = AutocompleteFieldWidget 
+        self.fields['hazards'].widgetFactory = DataGridFieldFactory
+        super(ProductEditForm, self).updateWidgets()
+
 
 @implementer(interfaces.IHazard)
-class Hazard(PloneModel, Base):
+class Hazard(Base):
     grok.title("Hazard")
 
     portal_type = "hazard"

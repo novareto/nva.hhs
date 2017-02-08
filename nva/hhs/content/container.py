@@ -8,6 +8,7 @@ from nva.hhs.content import models
 
 class Producers(SQLContainer):
     model = models.Producer
+    wrapper = models.ProducerWrapper
     title = "Producers"
     
     def key_converter(self, id):
@@ -19,7 +20,8 @@ class Producers(SQLContainer):
 
 class Products(SQLContainer):
     model = models.Product
-    title = "Product"
+    wrapper = models.ProductWrapper
+    title = "Products"
 
     def key_converter(self, id):
         return int(id)

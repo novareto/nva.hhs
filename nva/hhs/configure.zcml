@@ -7,6 +7,7 @@
   <include package="five.grok" />
   <include package="z3c.saconfig" file="meta.zcml" />
   <include package="collective.z3cform.datagridfield" />
+  <include package="plone.formwidget.autocomplete" />
 
   <i18n:registerTranslations directory="locales" />
 
@@ -33,6 +34,20 @@
   <browser:defaultView
       for=".content.models.Product"
       name="index"
+      />
+
+  <browser:page
+      for=".content.models.ProductWrapper"
+      name="edit"
+      class=".content.models.ProductEditForm"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
+      for="bgetem.sqlcontainer.container.SQLContainer"
+      name="default_page"
+      class="bgetem.sqlcontainer.views.ContainerView"
+      permission="zope2.View"
       />
 
 </configure>

@@ -4,8 +4,12 @@
 
 import grokcore.component as grok
 from zope import interface, schema
+from zope.component import getMultiAdapter
 from zope.schema.interfaces import IContextSourceBinder
-from collective.z3cform.datagridfield import DictRow
+from collective.z3cform.datagridfield import IDataGridField
+from z3c.form.converter import BaseDataConverter
+from z3c.form.interfaces import IDataConverter, IObjectFactory, NO_VALUE
+from z3c.form.object import getIfName
 from . import VOCABULARIES
 from . import MessageFactory as _
 
@@ -83,6 +87,12 @@ class ICategory(interface.Interface):
     )
 
 
+class ListField(schema.List):
+    """We need to have a unique class for the field list so that we
+    can apply a custom adapter."""
+    pass
+
+    
 class IProduct(interface.Interface):
 
     id = schema.Int(
@@ -100,7 +110,7 @@ class IProduct(interface.Interface):
 
     producer = schema.Choice(
         title=_(u"Producer"),
-        source=sources('producers'),
+        source=sources('producers_query'),
         required=False,
     )
 
@@ -109,9 +119,46 @@ class IProduct(interface.Interface):
         value_type=schema.Choice(title=_(u""), source=sources('categories')),
     )
 
-    hazards = schema.List(
+    hazards = ListField(
         title=_(u"Hazards"),
-        value_type=DictRow(title=_(u""), schema=IHazard),
+        value_type=schema.Object(title=_(u""), schema=IHazard),
     )
 
 
+class GridDataConverter(grok.MultiAdapter, BaseDataConverter):
+    """Convert between the AddressList object and the widget. 
+       If you are using objects, you must provide a custom converter
+    """
+    
+    grok.adapts(ListField, IDataGridField)
+    grok.implements(IDataConverter)
+
+    def toWidgetValue(self, value):
+        """Simply pass the data through with no change"""
+        rv = list()
+        for row in value:
+            d = dict()
+            for name, field in schema.getFieldsInOrder(
+                    self.field.value_type.schema):
+                d[name] = getattr(row, name)
+            rv.append(d)
+        return rv
+
+    def toFieldValue(self, value):
+        rv = list()
+        
+        for row in value:
+            d = dict()
+
+            name = getIfName(self.field.value_type.schema)
+            factory = getMultiAdapter(
+            (self.widget.context, self.widget.request,
+             self.widget.form, self.widget), IObjectFactory,
+                name=name).factory
+            
+            for name, field in schema.getFieldsInOrder(
+                    self.field.value_type.schema):
+                if row.get(name, NO_VALUE) != NO_VALUE:
+                    d[name] = row.get(name)
+            rv.append(factory(**d))
+        return rv

@@ -25,7 +25,7 @@ class ProducerTraverser(SimpleHandler, grok.MultiAdapter):
 
     def traverse(self, name, ignored):
         objs = container.Producers(self.context, '++producers++', 'sqlsession')
-        objs.__of__(self.context)
+        objs = objs.__of__(self.context)
         if not name:
             return objs
         else:
@@ -48,7 +48,7 @@ class ProductTraverser(SimpleHandler, grok.MultiAdapter):
 
     def traverse(self, name, ignored):
         objs = container.Products(self.context, '++products++', 'sqlsession')
-        objs.__of__(self.context)
+        objs = objs.__of__(self.context)
         if not name:
             return objs
         else:
